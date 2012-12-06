@@ -16,7 +16,6 @@ questions <- m[!is.na(m$id),]
 questions$category <- NA
 
 category.ranges <- data.frame(
-  # All except the last range, which I already set above
   category = categories[1:nrow(categories), 'Questions'],
   before = as.numeric(row.names(categories)[1:nrow(categories)]),
   after = c(as.numeric(row.names(categories)[2:nrow(categories)]), nrow(m))
