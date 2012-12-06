@@ -38,3 +38,10 @@ questions.molten <- melt(questions, c('category', 'Questions'), variable.name = 
 colnames(questions.molten) <- c('Category', 'Question', 'Country', 'Response')
 
 write.csv(questions.molten, file = 'matrix-molten.csv', row.names = F)
+
+#
+# How to query
+#
+
+library(sqldf)
+some.response <- sqldf("SELECT Response FROM [questions.molten] WHERE Country = 'Malaysia' AND Question = 'Are e-money funds/ back-up funds protected against creditors of the issuer?'")
