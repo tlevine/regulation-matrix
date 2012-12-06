@@ -5,7 +5,11 @@ library(plyr)
 m <- read.csv('matrix.csv')
 names(m)[1] <- 'id'
 
-# The "Questions" column contains two variables: category and question
+#
+# The "Questions" column contains two variables: category and question.
+# Separate these.
+#
+
 categories <- m[is.na(m$id),][2]
 categories$Questions <- factor(as.character(categories$Questions))
 questions <- m[!is.na(m$id),]
@@ -23,3 +27,14 @@ questions <- ddply(category.ranges, 'before', function(df){
   .questions$category <- df[1,'category']
   .questions
 })
+questions$before <- NULL
+questions$id <- NULL
+
+#
+# Turn the columns into a country variable.
+#
+
+questions.molten <- melt(questions, c('category', 'Questions'), variable.name = 'Country')
+colnames(questions.molten) <- c('Category', 'Question', 'Country', 'Response')
+
+write.csv(questions.molten, file = 'matrix-molten.csv', row.names = F)
